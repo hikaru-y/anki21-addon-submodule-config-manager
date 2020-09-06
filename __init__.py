@@ -8,8 +8,8 @@
 import logging
 import sys
 from pathlib import Path
-import aqt
 
+import aqt
 
 # Logging
 logger = logging.getLogger(__name__)
@@ -24,7 +24,7 @@ ch.setLevel(logging.WARNING)
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 # file handler
-log_file = str(Path(__file__).resolve().parent / f'{__name__}_debug.log')
+log_file = str(Path(__file__).resolve().parent / f"{__name__}_debug.log")
 fh = logging.FileHandler(filename=log_file)
 fh.setLevel(logging.WARNING)
 fh.setFormatter(formatter)
@@ -51,25 +51,25 @@ class ConfigDict(dict):
             CONFSIGNAL.updated.emit()
 
     def set_item_without_signal(self, key, value):
-        '''
+        """
         When executing this method to update values in bulk from outside
         the class, be sure to execute CONF.on_conf_updated() at the end.
-        '''
+        """
         super().__setitem__(key, value)
 
     def __setitem__(self, key, value):
         super().__setitem__(key, value)
         if not isinstance(value, dict):
-            logger.debug('__setitem__')
+            logger.debug("__setitem__")
             CONFSIGNAL.updated.emit()
 
     def __missing__(self, key):
-        logger.debug('__missing__')
+        logger.debug("__missing__")
         return None
 
     def __delitem__(self, key):
         super().__delitem__(key)
-        logger.debug('__delitem__')
+        logger.debug("__delitem__")
         CONFSIGNAL.updated.emit()
 
 
@@ -78,11 +78,12 @@ class ConfigDictRoot(ConfigDict):
         super().__init__(dic)
 
         aqt.mw.addonManager.setConfigUpdatedAction(
-            __name__, self.on_ConfigUpdatedAction)
+            __name__, self.on_ConfigUpdatedAction
+        )
         CONFSIGNAL.updated.connect(self.on_conf_updated)
 
     def on_conf_updated(self):
-        logger.debug('on_conf_updated')
+        logger.debug("on_conf_updated")
         aqt.mw.addonManager.writeConfig(__name__, self)
 
     def on_ConfigUpdatedAction(self, new_conf: dict):
