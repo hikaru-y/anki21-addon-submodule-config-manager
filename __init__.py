@@ -7,7 +7,7 @@
 
 import logging
 import sys
-from pathlib import Path
+# from pathlib import Path
 
 import aqt
 
@@ -23,12 +23,13 @@ ch = logging.StreamHandler(sys.stdout)
 ch.setLevel(logging.WARNING)
 ch.setFormatter(formatter)
 logger.addHandler(ch)
+
 # file handler
-log_file = str(Path(__file__).resolve().parent / f"{__name__}_debug.log")
-fh = logging.FileHandler(filename=log_file)
-fh.setLevel(logging.WARNING)
-fh.setFormatter(formatter)
-logger.addHandler(fh)
+# log_file = str(Path(__file__).resolve().parent / f"{__name__}_debug.log")
+# fh = logging.FileHandler(filename=log_file)
+# fh.setLevel(logging.WARNING)
+# fh.setFormatter(formatter)
+# logger.addHandler(fh)
 
 
 class ConfigSignal(aqt.QObject):
